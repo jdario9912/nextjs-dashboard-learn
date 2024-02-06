@@ -36,7 +36,7 @@ export async function createInvoice(formData: FormData) {
   const date = new Date().toISOString().split('T')[0];
 
   await sql`INSERT INTO invoices (customer_id, amount, status, date)
-  VALUES (${customerId}, ${amountInCent}, ${status}, ${date})`;
+    VALUES (${customerId}, ${amountInCent}, ${status}, ${date})`;
 
   revalidatePath('/dashboar/invoices');
   redirect('/dashboard/invoices');
@@ -65,7 +65,13 @@ export async function updateInvoice(id: string, formData: FormData) {
 
 // Delete invoice
 export async function deleteInvoice(id: string) {
-  await sql`DELETE FROM invoices WHERE id =${id}`;
+  // throw new Error('Error intencional al borrar un invoice');
 
-  revalidatePath('/dashboard/invoices');
+  try {
+    await sql`DELETE FROM invoices WHERE id =${id}`;
+
+    revalidatePath('/dashboard/invoices');
+  } catch (error) {
+    console.log('Ocurrio un error al borrar un invoice');
+  }
 }
