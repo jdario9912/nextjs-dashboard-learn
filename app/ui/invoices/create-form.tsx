@@ -11,7 +11,6 @@ import {
 import { Button } from '@/app/ui/button';
 import { createInvoice } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
-import { space } from 'postcss/lib/list';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
   const initialState = { message: null, errors: {} };
